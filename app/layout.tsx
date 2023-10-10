@@ -36,7 +36,9 @@ export default function RootLayout({
 
       </head>
       <WagmiConfig config={config}>
-        <ConnectKitProvider mode="light">
+        <ConnectKitProvider mode="light" customTheme={{
+          "--ck-font-family": '"Space Mono", monospace',
+        }}>
           <body>
             <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
               <Navbar />
