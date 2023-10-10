@@ -11,7 +11,7 @@ export default function Footer() {
           alt="Alchemy Supercharged"
         />
       </a>
-      <div className={styles.icons_container}>
+      {/* <div className={styles.icons_container}>
         <div>
           <a
             href="https://github.com/alchemyplatform/create-web3-dapp"
@@ -25,7 +25,8 @@ export default function Footer() {
             Follow us on Twitter
           </a>
         </div>
-      </div>
+      </div> */}
+      <br></br>
     </div>
   );
 }
