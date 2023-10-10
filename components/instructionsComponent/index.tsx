@@ -6,9 +6,9 @@ export default function InstructionsComponent() {
       <header className={styles.header_container}>
         <div className={styles.header}>
           <h1>
-            create<span>-web3-dapp</span>
+            Stake<span> $APE</span> and win<span> prizes</span>
           </h1>
-          <h3>The ultimate solution to create web3 applications</h3>
+          <h3>Enter the $APE Blendr and win prizes every week. No one loses ever.</h3>
         </div>
       </header>
 

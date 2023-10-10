@@ -29,12 +29,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"></link>
+
+      </head>
       <WagmiConfig config={config}>
-        <ConnectKitProvider mode="dark">
+        <ConnectKitProvider mode="light">
           <body>
-            <div style={{ display: "flex", flexDirection: "column", minHeight: "105vh" }}>
+            <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
               <Navbar />
-              <div style={{flexGrow: 1}}>{children}</div>
+              <div style={{ flexGrow: 1 }}>{children}</div>
               <Footer />
             </div>
           </body>

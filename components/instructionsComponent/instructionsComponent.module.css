@@ -21,6 +21,8 @@
 }
 .header_container h1{
 	font-size: 64px;
+	word-spacing: -20px;
+	letter-spacing: -2px;
 
 }
 .header_container h3{
@@ -28,7 +30,7 @@
 }
 
 .header_container h1 span{
-	background: linear-gradient(140deg, rgba(54,190,255,1) 0%, rgba(115,63,241,1) 100%);
+	background: #3241eb;
 	background-clip: text;
 	color: transparent;
 }
