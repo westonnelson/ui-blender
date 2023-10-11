@@ -3,7 +3,7 @@ import { WagmiConfig, createConfig } from "wagmi";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import Navbar from "@/components/navigation/navbar";
 import Footer from "@/components/navigation/footer";
-import { goerli } from "viem/chains";
+import { goerli, mainnet } from "viem/chains";
 
 const config = createConfig(
   getDefaultConfig({
@@ -18,7 +18,7 @@ const config = createConfig(
     appDescription: "Your App Description",
     appUrl: "https://family.co", // your app's url
     appIcon: "https://family.co/logo.png", // your app's logo,no bigger than 1024x1024px (max. 1MB)
-    chains: [goerli]
+    chains: [goerli, mainnet]
   })
 );
 
@@ -29,12 +29,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-        <link rel="preconnect" href="https://fonts.gstatic.com"></link>
-        <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"></link>
-
-      </head>
       <WagmiConfig config={config}>
         <ConnectKitProvider mode="light" customTheme={{
           "--ck-font-family": '"Space Mono", monospace',

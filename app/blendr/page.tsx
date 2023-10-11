@@ -1,6 +1,6 @@
 'use client'
-import styles from "./page.module.css";
-import "../globals.css";
+import styles from "./page.module.scss";
+import "../globals.scss";
 
 export default function Blendr() {
   return (

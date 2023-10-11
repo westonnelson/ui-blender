@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "./footer.module.css";
+import styles from "./footer.module.scss";
 import { ApeCoinLogoLarge } from "@/components/svgs/ApeCoinLogoLarge";
 import { ChainlinkLogo } from "@/components/svgs/ChainlinkLogo";
 import { TheGraphLogo } from "@/components/svgs/TheGraphLogo";

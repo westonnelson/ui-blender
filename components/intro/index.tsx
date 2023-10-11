@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ApeCoinLogo } from "../svgs/ApeCoinLogo";
-import styles from "./intro.module.css";
+import styles from "./intro.module.scss";
 
 export default function Intro() {
   return (
