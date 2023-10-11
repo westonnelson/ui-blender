@@ -1,7 +1,7 @@
 import { ApeCoinLogo } from "../svgs/ApeCoinLogo";
-import styles from "./instructionsComponent.module.css";
+import styles from "./intro.module.css";
 
-export default function InstructionsComponent() {
+export default function Intro() {
   return (
     <div className={styles.container}>
       <header className={styles.header_container}>
