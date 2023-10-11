@@ -4,6 +4,7 @@ import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import Navbar from "@/components/navigation/navbar";
 import Footer from "@/components/navigation/footer";
 import { goerli, mainnet } from "viem/chains";
+import { AlchemyContextWrapper } from "@/context/alchemy.context";
 
 const config = createConfig(
   getDefaultConfig({
@@ -38,6 +39,7 @@ export default function RootLayout({
         <ConnectKitProvider mode="light" customTheme={{
           "--ck-font-family": '"Space Mono", monospace',
         }}>
+          <AlchemyContextWrapper>
           <body>
             <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
               <Navbar />
@@ -45,6 +47,7 @@ export default function RootLayout({
               <Footer />
             </div>
           </body>
+          </AlchemyContextWrapper>
         </ConnectKitProvider>
       </WagmiConfig>
     </html>

@@ -2,8 +2,9 @@ import Link from "next/link";
 import { ApeCoinLogo } from "../svgs/ApeCoinLogo";
 import styles from "./intro.module.scss";
 import { useEffect, useState } from "react";
-import { setNewTime } from "@/utils/utils";
+import { formatBigNumberTwoDecimals, setNewTime } from "@/utils/utils";
 import { BigNumber } from "ethers";
+import { useAlchemyContext } from "@/context/alchemy.context";
 
 export default function Intro() {
   const [countdown, setCountdown] = useState({
@@ -13,14 +14,27 @@ export default function Intro() {
     seconds: 0,
   });
 
+  const [currentAward, setCurrentAward] = useState("0");
+  const [totalDeposited, setTotalDeposited] = useState("0");
+
+  const { alchemy } = useAlchemyContext();
+
+  useEffect(() => {
+    console.log(alchemy);
+    const fetchedCurrentAward = alchemy?.apeBlendrData?.apeCoinStakeUnclaimed.toString() || "0";
+    setCurrentAward(fetchedCurrentAward);
+    const fetchedTotalDeposited = alchemy?.apeBlendrData?.apeCoinStakeDeposited.toString() || "0";
+    setTotalDeposited(fetchedTotalDeposited);
+  }, [alchemy]);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setNewTime(setCountdown, BigNumber.from(1697888882));
+      setNewTime(setCountdown, BigNumber.from(alchemy?.apeBlendrData?.epochEndAt || "0"));
     }, 1000);
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [alchemy?.apeBlendrData?.epochEndAt]);
 
   return (
     <div className={styles.container}>
@@ -39,7 +53,7 @@ export default function Intro() {
           <h2>Current Prize</h2>
           <div className={styles.aligned}>
             <ApeCoinLogo />
-            <h1>69.42</h1>
+            <h1>{formatBigNumberTwoDecimals(BigNumber.from(currentAward))}</h1>
           </div>
         </div>
         <div className={styles.stat}>
@@ -54,7 +68,7 @@ export default function Intro() {
           <h2>Total Value Locked</h2>
           <div className={styles.aligned}>
             <ApeCoinLogo />
-            <h1>690,234.42</h1>
+            <h1>{formatBigNumberTwoDecimals(BigNumber.from(totalDeposited))}</h1>
           </div>
         </div>
         <div className={styles.stat}>
