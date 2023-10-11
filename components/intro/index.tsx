@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ApeCoinLogo } from "../svgs/ApeCoinLogo";
 import styles from "./intro.module.css";
 
@@ -19,9 +20,26 @@ export default function Intro() {
           <div className={styles.aligned}><ApeCoinLogo /><h1>69.42 $APE</h1></div>
         </div>
         <div>
+          <h2>Total aped</h2>
+          <div className={styles.aligned}><h1>235 apes</h1></div>
+        </div>
+        <div>
           <h2>Next prize draw</h2>
           <div className={styles.aligned}><h1>2d 3h 42m 23s</h1></div>
         </div>
+      </div>
+
+      <div className={styles.buttons_container}>
+        <Link href={'/blendr'}>
+
+          <div className={styles.button}>
+            <p>Enter The Blendr</p>
+          </div>
+        </Link>
+        <Link href={'/how-to'}>
+          <div className={styles.button}>
+            <p>How It Works</p>
+          </div></Link>
       </div>
 
       {/* <div className={styles.buttons_container}>
@@ -30,12 +48,6 @@ export default function Intro() {
           <div className={styles.aligned}><h1>2d 3h 42m 23s</h1></div>
         </div>
       </div> */}
-
-      <div className={styles.buttons_container}>
-        <div className={styles.button}>
-          <p>Enter The Blendr</p>
-        </div>
-      </div>
 
       {/* <p className={styles.get_started}>
         ApeBlendr is a permissionless and non-custodial game, built on top of ApeCoin.
