@@ -1,0 +1,92 @@
+@import "../../assets/sass/variables";
+
+.blendr-wrapper {
+    padding: 16px 36px;
+  
+    .blendr-grid{
+      display: grid;
+      grid-template-columns: 1fr 556px;
+      grid-column-gap: 24px;
+      //min-height: calc(100vh - 200px);
+  
+      @include lg {
+        grid-template-columns: 1fr;
+        grid-row-gap: 24px;
+      }
+  
+      @include sm {
+        display: block;
+      }
+    }
+  
+    @include sm {
+      padding: 16px 16px;
+    }
+
+    .blendr-stats {
+      width: 100%;
+      height: 520px;
+      background: rgba(255, 0, 131, 1);
+
+      grid-column: 1/2;
+      grid-row: 1/3;
+      border-radius: 16px;
+      padding: 32px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      h3 {
+        color: #FFF;
+        margin-bottom: 140px;
+      }
+
+      .blendr-stats-data {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4rem;
+        justify-content: center;
+        color: #fff;
+        text-align: center;
+
+        .stat {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          .aligned {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            svg {
+              width: 36px;
+              height: 36px;
+            }
+          }
+          h1 {
+            font-size: 36px;
+          }
+          p {
+            font-size: 36px;
+          }
+        }
+
+      }
+
+    }
+
+    .blendr-deposit {
+      width: 100%;
+      height: 520px;
+      background: #1627e3;     
+      border-radius: 16px;
+      padding: 32px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      h3 {
+        color: #FFF;
+      }
+    }
+  }

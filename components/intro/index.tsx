@@ -48,6 +48,18 @@ export default function Intro() {
           </h3>
         </div>
       </div>
+      <div className={styles.buttons_container}>
+        <Link href={"/blendr"}>
+          <div className={styles.button}>
+            <p>Enter The Blendr</p>
+          </div>
+        </Link>
+        <Link href={"/faq"}>
+          <div className={styles.button}>
+            <p>How It Works</p>
+          </div>
+        </Link>
+      </div>
       <div className={styles.stats_container}>
         <div className={styles.stat}>
           <h2>Current Prize</h2>
@@ -77,18 +89,6 @@ export default function Intro() {
             <h1>{`${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s`}</h1>
           </div>
         </div>
-      </div>
-      <div className={styles.buttons_container}>
-        <Link href={"/blendr"}>
-          <div className={styles.button}>
-            <p>Enter The Blendr</p>
-          </div>
-        </Link>
-        <Link href={"/faq"}>
-          <div className={styles.button}>
-            <p>How It Works</p>
-          </div>
-        </Link>
       </div>
     </div>
   );
