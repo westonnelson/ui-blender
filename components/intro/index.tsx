@@ -17,7 +17,7 @@ export default function Intro() {
       <div className={styles.buttons_container}>
         <div>
           <h2>Current prize</h2>
-          <div className={styles.aligned}><ApeCoinLogo /><h1>69.42 $APE</h1></div>
+          <div className={styles.aligned}><ApeCoinLogo /><h1>69.42</h1></div>
         </div>
         <div>
           <h2>Total aped</h2>
@@ -31,7 +31,6 @@ export default function Intro() {
 
       <div className={styles.buttons_container}>
         <Link href={'/blendr'}>
-
           <div className={styles.button}>
             <p>Enter The Blendr</p>
           </div>
@@ -39,7 +38,8 @@ export default function Intro() {
         <Link href={'/how-to'}>
           <div className={styles.button}>
             <p>How It Works</p>
-          </div></Link>
+          </div>
+        </Link>
       </div>
 
       {/* <div className={styles.buttons_container}>

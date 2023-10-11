@@ -1,32 +1,35 @@
+import Link from "next/link";
 import styles from "./footer.module.css";
+import { ApeCoinLogoLarge } from "@/components/svgs/ApeCoinLogoLarge";
+import { ChainlinkLogo } from "@/components/svgs/ChainlinkLogo";
+import { TheGraphLogo } from "@/components/svgs/TheGraphLogo";
+import { AlchemyLogo } from "@/components/svgs/AlchemyLogo";
 
 export default function Footer() {
   return (
     <div className={styles.footer}>
-      <a href="https://alchemy.com/?a=create-web3-dapp" target={"_blank"}>
-        <img
-          id="badge-button"
-          style={{ width: "240px", height: "53px" }}
-          src="https://static.alchemyapi.io/images/marketing/badgeLight.png"
-          alt="Alchemy Supercharged"
-        />
-      </a>
-      {/* <div className={styles.icons_container}>
-        <div>
-          <a
-            href="https://github.com/alchemyplatform/create-web3-dapp"
-            target={"_blank"}
-          >
-            Leave a star on Github
-          </a>
-        </div>
-        <div>
-          <a href="https://twitter.com/AlchemyPlatform" target={"_blank"}>
-            Follow us on Twitter
-          </a>
-        </div>
-      </div> */}
-      <br></br>
+      <div><h3>Powered by</h3></div>
+      
+      <div>
+        <Link href="https://apecoin.com" target={"_blank"}>
+          <ApeCoinLogoLarge />
+        </Link>
+      </div>
+      <div>
+        <Link href="https://chain.link" target={"_blank"}>
+          <ChainlinkLogo />
+        </Link>
+      </div>
+      <div>
+        <Link href="https://thegraph.com" target={"_blank"}>
+          <TheGraphLogo />
+        </Link>
+      </div>
+      <div>
+        <Link href="https://alchemy.com" target={"_blank"}>
+          <AlchemyLogo />
+        </Link>
+      </div>
     </div>
   );
 }
