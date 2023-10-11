@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 672px;
+  margin: 0 auto;
+
+  div {
+    margin-bottom: 30px;
+    h3 {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 30px;
+      color: var(--foreground);
+      margin-bottom: 20px;
+    }
+  
+    p {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--gray);
+    }
+  }
+}

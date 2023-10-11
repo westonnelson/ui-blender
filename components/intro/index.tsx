@@ -1,57 +1,81 @@
 import Link from "next/link";
 import { ApeCoinLogo } from "../svgs/ApeCoinLogo";
 import styles from "./intro.module.scss";
+import { useEffect, useState } from "react";
+import { setNewTime } from "@/utils/utils";
+import { BigNumber } from "ethers";
 
 export default function Intro() {
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNewTime(setCountdown, BigNumber.from(1697888882));
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
-      <header className={styles.header_container}>
+      <div className={styles.header_container}>
         <div className={styles.header}>
           <h1>
             Stake<span> $APE</span> and win<span> prizes</span>
           </h1>
-          <h3>Enter the $APE Blendr and win prizes every week. No one loses ever.  </h3>
-        </div>
-      </header>
-
-      <div className={styles.buttons_container}>
-        <div>
-          <h2>Current prize</h2>
-          <div className={styles.aligned}><ApeCoinLogo /><h1>69.42</h1></div>
-        </div>
-        <div>
-          <h2>Total aped</h2>
-          <div className={styles.aligned}><h1>235 apes</h1></div>
-        </div>
-        <div>
-          <h2>Next prize draw</h2>
-          <div className={styles.aligned}><h1>2d 3h 42m 23s</h1></div>
+          <h3>
+            Enter the $APE Blendr and win prizes every week. No one loses ever.{" "}
+          </h3>
         </div>
       </div>
-
+      <div className={styles.stats_container}>
+        <div className={styles.stat}>
+          <h2>Current Prize</h2>
+          <div className={styles.aligned}>
+            <ApeCoinLogo />
+            <h1>69.42</h1>
+          </div>
+        </div>
+        <div className={styles.stat}>
+          <h2>Total Aped</h2>
+          <div className={styles.aligned}>
+            <h1>235 apes</h1>
+          </div>
+        </div>
+      </div>
+      <div className={styles.stats_container}>
+        <div className={styles.stat}>
+          <h2>Total Value Locked</h2>
+          <div className={styles.aligned}>
+            <ApeCoinLogo />
+            <h1>690,234.42</h1>
+          </div>
+        </div>
+        <div className={styles.stat}>
+          <h2>Next Prize Draw</h2>
+          <div className={styles.aligned}>
+            <h1>{`${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s`}</h1>
+          </div>
+        </div>
+      </div>
       <div className={styles.buttons_container}>
-        <Link href={'/blendr'}>
+        <Link href={"/blendr"}>
           <div className={styles.button}>
             <p>Enter The Blendr</p>
           </div>
         </Link>
-        <Link href={'/how-to'}>
+        <Link href={"/faq"}>
           <div className={styles.button}>
             <p>How It Works</p>
           </div>
         </Link>
       </div>
-
-      {/* <div className={styles.buttons_container}>
-        <div>
-          <h2>Next prize draw</h2>
-          <div className={styles.aligned}><h1>2d 3h 42m 23s</h1></div>
-        </div>
-      </div> */}
-
-      {/* <p className={styles.get_started}>
-        ApeBlendr is a permissionless and non-custodial game, built on top of ApeCoin.
-      </p> */}
     </div>
   );
 }
