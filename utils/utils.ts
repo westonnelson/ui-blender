@@ -46,7 +46,19 @@ export const setNewTime = (
     }
   };
 
-  // formats big numbers to string
+export const formatBigNumber = (number: BigNumber | undefined): string => {
+  return (+ethers.utils.formatEther(number || 0)).toFixed(3);
+};
+
 export const formatBigNumberTwoDecimals = (number: BigNumber | undefined): string => {
   return (+ethers.utils.formatEther(number || 0)).toFixed(2);
+};
+
+export const formatUsdPrice = (
+  usdPricePerCoin: string | undefined,
+  coinAmount: BigNumber | undefined
+): string => {
+  return (
+    parseFloat(usdPricePerCoin || "0") * parseFloat(formatBigNumber(coinAmount))
+  ).toFixed(2);
 };
