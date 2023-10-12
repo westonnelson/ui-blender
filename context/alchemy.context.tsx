@@ -7,8 +7,9 @@ import {
   AlchemyType,
   ApeBlendrType,
 } from "../types/alchemy";
-import { Contract, ethers } from "ethers";
+import { BigNumber, Contract, ethers } from "ethers";
 import { AlchemyProvider } from "@ethersproject/providers";
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 
 const AlchemyContext = createContext<AlchemyContextType>({
   alchemy: undefined,
@@ -17,6 +18,7 @@ const AlchemyContext = createContext<AlchemyContextType>({
 export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const { address, isConnected } = useAccount();
   const [alchemy, setAlchemy] = useState<AlchemyType>();
 
   useEffect(() => {
@@ -39,6 +41,14 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
         alchemyProvider
       );
 
+      let userApeCoinBalance = BigNumber.from(0);
+      let userStakedBalance = BigNumber.from(0);
+
+      if (address) {
+        userApeCoinBalance = await apeCoinContract.balanceOf(address);
+        userStakedBalance = await apeBlendrContract.balanceOf(address);
+      }
+
       const hasEpochEnded = await apeBlendrContract.hasEpochEnded();
       const epochEndAt = await apeBlendrContract.epochEndAt();
       const apeCoinStake = await apeBlendrContract.getApeCoinStake();
@@ -50,12 +60,14 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
           epochEndAt: epochEndAt,
           apeCoinStakeDeposited: apeCoinStake.deposited,
           apeCoinStakeUnclaimed: apeCoinStake.unclaimed,
-          totalPrizeDraws: totalPrizeDraws
+          totalPrizeDraws: totalPrizeDraws,
+          userStakedBalance: userStakedBalance,
+          userApeCoinBalance: userApeCoinBalance
         } as ApeBlendrType
       });
     };
     initApeBlendrData();
-  }, []);
+  }, [address]);
 
   return (
     <AlchemyContext.Provider

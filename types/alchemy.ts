@@ -6,6 +6,8 @@ export type ApeBlendrType = {
   apeCoinStakeDeposited: ethers.BigNumber;
   apeCoinStakeUnclaimed: ethers.BigNumber;
   totalPrizeDraws: ethers.BigNumber;
+  userStakedBalance: ethers.BigNumber;
+  userApeCoinBalance: ethers.BigNumber;
 };
 
 export type AlchemyType = {
