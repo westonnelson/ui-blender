@@ -31,12 +31,12 @@ export default function ApeBlendr() {
 
   const [currentAward, setCurrentAward] = useState("0");
   const [totalPrizeDraws, setTotalPrizeDraws] = useState("0");
-  const [type, setType] = useState("add");
   const [userApeCoinBalance, setUserApeCoinBalance] = useState("0");
   const [userStakedBalance, setUserStakedBalance] = useState("0");
   const [valueForDepositOrWithdraw, setValueForDepositOrWithdraw] =
     useState("");
   const [walletClientSigner, setWalletClientSginer] = useState({} as any);
+  const [userOddsToWin, setUserOddsToWin] = useState("∞");
 
   const { alchemy } = useAlchemyContext();
 
@@ -63,6 +63,8 @@ export default function ApeBlendr() {
     const fetchedUserApeCoinBalance =
       alchemy?.apeBlendrData?.userApeCoinBalance.toString() || "0";
     setUserApeCoinBalance(fetchedUserApeCoinBalance);
+    const calculatedUserOdds = (alchemy?.apeBlendrData?.apeCoinStakeDeposited.div(alchemy?.apeBlendrData?.userStakedBalance))?.toString() || "∞";
+    setUserOddsToWin(calculatedUserOdds);
   }, [alchemy]);
 
   useEffect(() => {
@@ -154,7 +156,7 @@ export default function ApeBlendr() {
               <div className={styles.stat}>
                 <h1>Odds</h1>
                 <div className={styles.aligned}>
-                  <p>1:∞</p>
+                  <p>1:{userOddsToWin}</p>
                 </div>
               </div>
             </div>
@@ -194,26 +196,23 @@ export default function ApeBlendr() {
                     <div>
                       $ {formatUsdPrice("0", BigNumber.from("0" || "0"))}
                     </div>
-
-                    <>
-                      <div>
-                        <span
-                          onClick={() =>
-                            handleChange(
-                              formatBigNumber(
-                                BigNumber.from(userApeCoinBalance || "0")
-                              )
+                    <div>
+                      <span
+                        onClick={() =>
+                          handleChange(
+                            formatBigNumber(
+                              BigNumber.from(userApeCoinBalance || "0")
                             )
-                          }
-                        >
-                          MAX
-                        </span>
-                        <p>
-                          Balance:{" "}
-                          {formatBigNumber(BigNumber.from(userApeCoinBalance))}
-                        </p>
-                      </div>
-                    </>
+                          )
+                        }
+                      >
+                        MAX
+                      </span>
+                      <p>
+                        Balance:{" "}
+                        {formatBigNumber(BigNumber.from(userApeCoinBalance))}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
