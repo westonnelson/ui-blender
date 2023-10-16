@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ApeCoinLogo } from "../svgs/ApeCoinLogo";
 import styles from "./apeblendr.module.scss";
 import { useEffect, useState } from "react";
@@ -8,7 +7,6 @@ import {
   constructPayout,
   formatAddress,
   formatBigNumber,
-  formatBigNumberTwoDecimals,
   formatUsdPrice,
   setNewTime,
 } from "@/utils/utils";
@@ -17,8 +15,6 @@ import Button from "../Button/Button";
 import {
   WalletClient,
   useAccount,
-  useConnect,
-  useDisconnect,
   useWalletClient,
 } from "wagmi";
 
@@ -26,6 +22,7 @@ import ApeBlendrContract from "../../contracts/ApeBlendr.json";
 import { useSubgraphContext } from "@/context/subgraph.context";
 import Modal from "../Modal/Modal";
 import LoadingModal from "../Modal/LoadingModal/LoadingModal";
+import ErrorModal from "../Modal/ErrorModal/ErrorModal";
 
 export default function ApeBlendr() {
   const [countdown, setCountdown] = useState({
@@ -44,6 +41,8 @@ export default function ApeBlendr() {
   const [walletClientSigner, setWalletClientSginer] = useState({} as any);
   const [userOddsToWin, setUserOddsToWin] = useState("∞");
   const [showLoadingModal, setShowLoadingModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorModalMessage, setErrorModalMessage] = useState("");
 
   const { alchemy } = useAlchemyContext();
   const { subgraph } = useSubgraphContext();
@@ -128,7 +127,10 @@ export default function ApeBlendr() {
       setShowLoadingModal(true);
       await handleDepositTxn.wait();
       setShowLoadingModal(false);
-    } catch (error: any) {}
+    } catch (error: any) {
+      setShowErrorModal(true);
+      setErrorModalMessage(error.reason);
+    }
   };
 
   const handleWithdraw = async () => {
@@ -144,7 +146,10 @@ export default function ApeBlendr() {
       setShowLoadingModal(true);
       await handleWithdrawTxn.wait();
       setShowLoadingModal(false);
-    } catch (error: any) {}
+    } catch (error: any) {
+      setShowErrorModal(true);
+      setErrorModalMessage(error.reason);
+    }
   };
 
   const onLoadingModalClose = async () => {
@@ -301,12 +306,19 @@ export default function ApeBlendr() {
           </div>
         </div>
       </div>
-      <Modal
-          open={showLoadingModal}
-          onClose={() => setShowLoadingModal(false)}
-        >
-          <LoadingModal onClose={() => onLoadingModalClose()} />
-        </Modal>
+      <Modal open={showLoadingModal} onClose={() => setShowLoadingModal(false)}>
+        <LoadingModal onClose={() => onLoadingModalClose()} />
+      </Modal>
+
+      <Modal open={showErrorModal} onClose={() => setShowErrorModal(false)}>
+        <ErrorModal
+          onClose={() => {
+            setShowErrorModal(false);
+            setErrorModalMessage("");
+          }}
+          errorMessage={errorModalMessage}
+        />
+      </Modal>
     </div>
   );
 }
