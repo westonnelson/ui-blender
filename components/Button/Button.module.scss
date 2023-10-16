@@ -47,6 +47,7 @@
 
       &:hover {
         background: var(--secondary-button-hover-color);
+        transform: translateY(-3px);
       }
 
       &:disabled {

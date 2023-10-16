@@ -50,7 +50,6 @@ export default function ApeBlendr() {
 
   useEffect(() => {
     if (address) {
-      console.log(address);
       setWalletClientSginer(walletClient);
     }
   }, [address, walletClient]);
@@ -151,26 +150,26 @@ export default function ApeBlendr() {
             <h3>Ape Coin Draw #{totalPrizeDraws}</h3>
             <div className={styles["blendr-stats-data"]}>
               <div className={styles.stat}>
-                <h1>Reward</h1>
+                <h3>Reward</h3>
                 <div className={styles.aligned}>
                   <ApeCoinLogo />
                   <p>{formatBigNumber(BigNumber.from(currentAward))}</p>
                 </div>
               </div>
               <div className={styles.stat}>
-                <h1>Ends In</h1>
+                <h3>Ends In</h3>
                 <div className={styles.aligned}>
                   <p>{`${countdown.days}d ${countdown.hours}h ${countdown.minutes}m`}</p>
                 </div>
               </div>
               <div className={styles.stat}>
-                <h1>Draw No</h1>
+                <h3>Draw No</h3>
                 <div className={styles.aligned}>
                   <p>#{totalPrizeDraws}</p>
                 </div>
               </div>
               <div className={styles.stat}>
-                <h1>Odds</h1>
+                <h3>Odds</h3>
                 <div className={styles.aligned}>
                   <p>1:{userOddsToWin}</p>
                 </div>
