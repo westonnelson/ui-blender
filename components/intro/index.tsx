@@ -33,7 +33,7 @@ export default function Intro() {
 
   useEffect(() => {
     const fetchedTotalPlayers =
-      subgraph?.apeBlendrStatistics.playersCount.toString() || "0";
+      subgraph?.apeBlendrStatistics?.playersCount.toString() || "0";
     setTotalPlayers(fetchedTotalPlayers);
   }, [subgraph]);
 

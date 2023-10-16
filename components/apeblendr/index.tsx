@@ -4,6 +4,9 @@ import styles from "./apeblendr.module.scss";
 import { useEffect, useState } from "react";
 import { useAlchemyContext } from "@/context/alchemy.context";
 import {
+  constructDate,
+  constructPayout,
+  formatAddress,
   formatBigNumber,
   formatBigNumberTwoDecimals,
   formatUsdPrice,
@@ -20,6 +23,7 @@ import {
 } from "wagmi";
 
 import ApeBlendrContract from "../../contracts/ApeBlendr.json";
+import { useSubgraphContext } from "@/context/subgraph.context";
 
 export default function ApeBlendr() {
   const [countdown, setCountdown] = useState({
@@ -39,6 +43,7 @@ export default function ApeBlendr() {
   const [userOddsToWin, setUserOddsToWin] = useState("∞");
 
   const { alchemy } = useAlchemyContext();
+  const { subgraph } = useSubgraphContext();
 
   const { address, isConnected } = useAccount();
   const { data: walletClient, isError, isLoading } = useWalletClient();
@@ -72,7 +77,9 @@ export default function ApeBlendr() {
         )
         ?.toString() || "∞";
     // TODO:: Fix workaround for division-by-zero error
-    calculatedUserOdds == "1" ? calculatedUserOdds = "∞": calculatedUserOdds = calculatedUserOdds;
+    calculatedUserOdds == "1"
+      ? (calculatedUserOdds = "∞")
+      : (calculatedUserOdds = calculatedUserOdds);
     setUserOddsToWin(calculatedUserOdds);
   }, [alchemy]);
 
@@ -240,6 +247,47 @@ export default function ApeBlendr() {
                 >
                   Withdraw
                 </Button>
+              </div>
+            </div>
+          </div>
+          <div className={styles["blendr-draws-section"]}>
+            <div className={styles["blendr-draws-section-header"]}>
+              <div className={styles["blendr-draws-title"]}>
+                <h3>Latest Prize Draws</h3>
+              </div>
+            </div>
+            <div className={styles["blendr-draws-section-body"]}>
+              <div className={styles["blendr-draws-table"]}>
+                <div className={styles["blendr-draws-table-header"]}>
+                  <div className={styles["tr"]}>
+                    <div className={styles["th"]}>Winner</div>
+                    <div className={styles["th"]}>Date</div>
+                    <div className={styles["th"]}>Prize</div>
+                  </div>
+                </div>
+                <div className={`${styles["blendr-draws-table-body"]}`}>
+                  {subgraph?.prizeDraws?.map((draw, index) => {
+                    return (
+                      <div
+                        className={`${styles["tr"]} ${
+                          index % 2 === 0 ? "" : styles["odd"]
+                        }`}
+                        key={draw.blockTimestamp}
+                      >
+                        <div className={styles["td"]}>
+                          {formatAddress(draw.winner)}
+                        </div>
+                        <div className={styles["td"]}>
+                          {constructDate(draw.blockTimestamp)}
+                        </div>
+                        <div className={styles["td"]}>
+                          <ApeCoinLogo />
+                          <h3>{constructPayout(draw.awardForDraw)}</h3>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

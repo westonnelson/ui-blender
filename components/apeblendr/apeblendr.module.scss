@@ -88,7 +88,7 @@
 
     .blendr-deposit-data {
       .deposit-field-wrapper {
-        background: var(--deposit-modal-content-background-color);
+        background: #f8f9fc;
         border-radius: 16px;
         padding: 20px 24px;
 
@@ -196,6 +196,143 @@
         grid-template-columns: 1fr 1fr;
         grid-gap: 12px;
         margin-top: 20px;
+      }
+    }
+  }
+
+  .blendr-draws-section {
+    background: var(--app-menu-background);
+    border-radius: 16px;
+    padding: 32px 24px;
+
+    .blendr-draws-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .blendr-draws-title {
+        display: flex;
+        align-items: center;
+
+        svg {
+          path {
+            fill: var(--foreground);
+          }
+        }
+
+        h3 {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 26px;
+          color: var(--foreground);
+          margin-left: 14px;
+        }
+
+        @include sm {
+          margin-bottom: 20px;
+        }
+      }
+
+      @include sm {
+        display: block;
+      }
+    }
+
+    .blendr-draws-section-body {
+      margin-top: 20px;
+      overflow-x: auto;
+
+      .blendr-draws-table {
+        .blendr-draws-table-header {
+          .tr {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 3px;
+            align-items: center;
+
+            .th {
+              font-style: normal;
+              font-weight: 500;
+              font-size: 12px;
+              line-height: 18px;
+              text-transform: uppercase;
+              color: var(--gray);
+              padding: 12px;
+
+              &:nth-of-type(1) {
+                text-align: left;
+              }
+
+              &:nth-of-type(2) {
+                text-align: right;
+              }
+
+              &:nth-of-type(3) {
+                text-align: right;
+              }
+            }
+          }
+        }
+
+        .blendr-draws-table-body {
+          padding-right: 4px;
+          overflow-y: auto;
+          height: 370px;
+
+          .tr {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 3px;
+            align-items: center;
+            border-radius: 10px;
+
+            &.odd {
+              background: #f8f9fc;
+            }
+
+            .td {
+              padding: 12px;
+
+              &:nth-of-type(1) {
+                text-align: left;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 13px;
+                line-height: 22px;
+                color: var(--foreground);
+              }
+
+              &:nth-of-type(2) {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 13px;
+                line-height: 22px;
+                text-align: right;
+                color: var(--gray);
+              }
+
+              &:nth-of-type(3) {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                h3 {
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 13px;
+                  line-height: 22px;
+                  color: var(--foreground);
+                  margin-left: 8px;
+                }
+              }
+              svg {
+                width: 18px;
+                height: 18px;
+              }
+            }
+          }
+        }
       }
     }
   }
