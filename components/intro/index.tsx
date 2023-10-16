@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { formatBigNumberTwoDecimals, setNewTime } from "@/utils/utils";
 import { BigNumber } from "ethers";
 import { useAlchemyContext } from "@/context/alchemy.context";
+import { useSubgraphContext } from "@/context/subgraph.context";
 
 export default function Intro() {
   const [countdown, setCountdown] = useState({
@@ -16,20 +17,32 @@ export default function Intro() {
 
   const [currentAward, setCurrentAward] = useState("0");
   const [totalDeposited, setTotalDeposited] = useState("0");
+  const [totalPlayers, setTotalPlayers] = useState("0");
 
   const { alchemy } = useAlchemyContext();
+  const { subgraph } = useSubgraphContext();
 
   useEffect(() => {
-    console.log(alchemy);
-    const fetchedCurrentAward = alchemy?.apeBlendrData?.apeCoinStakeUnclaimed.toString() || "0";
+    const fetchedCurrentAward =
+      alchemy?.apeBlendrData?.apeCoinStakeUnclaimed.toString() || "0";
     setCurrentAward(fetchedCurrentAward);
-    const fetchedTotalDeposited = alchemy?.apeBlendrData?.apeCoinStakeDeposited.toString() || "0";
+    const fetchedTotalDeposited =
+      alchemy?.apeBlendrData?.apeCoinStakeDeposited.toString() || "0";
     setTotalDeposited(fetchedTotalDeposited);
   }, [alchemy]);
 
   useEffect(() => {
+    const fetchedTotalPlayers =
+      subgraph?.apeBlendrStatistics.playersCount.toString() || "0";
+    setTotalPlayers(fetchedTotalPlayers);
+  }, [subgraph]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setNewTime(setCountdown, BigNumber.from(alchemy?.apeBlendrData?.epochEndAt || "0"));
+      setNewTime(
+        setCountdown,
+        BigNumber.from(alchemy?.apeBlendrData?.epochEndAt || "0")
+      );
     }, 1000);
     return () => {
       clearInterval(interval);
@@ -71,7 +84,7 @@ export default function Intro() {
         <div className={styles.stat}>
           <h2>Total Aped</h2>
           <div className={styles.aligned}>
-            <h1>235 apes</h1>
+            <h1>{totalPlayers} apes</h1>
           </div>
         </div>
       </div>
@@ -80,7 +93,9 @@ export default function Intro() {
           <h2>Total Value Locked</h2>
           <div className={styles.aligned}>
             <ApeCoinLogo />
-            <h1>{formatBigNumberTwoDecimals(BigNumber.from(totalDeposited))}</h1>
+            <h1>
+              {formatBigNumberTwoDecimals(BigNumber.from(totalDeposited))}
+            </h1>
           </div>
         </div>
         <div className={styles.stat}>

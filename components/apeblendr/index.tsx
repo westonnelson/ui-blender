@@ -63,7 +63,16 @@ export default function ApeBlendr() {
     const fetchedUserApeCoinBalance =
       alchemy?.apeBlendrData?.userApeCoinBalance.toString() || "0";
     setUserApeCoinBalance(fetchedUserApeCoinBalance);
-    const calculatedUserOdds = (alchemy?.apeBlendrData?.apeCoinStakeDeposited.div(alchemy?.apeBlendrData?.userStakedBalance))?.toString() || "∞";
+    let calculatedUserOdds =
+      alchemy?.apeBlendrData?.apeCoinStakeDeposited
+        .div(
+          alchemy?.apeBlendrData?.userStakedBalance.gt(BigNumber.from(0))
+            ? alchemy?.apeBlendrData?.userStakedBalance
+            : alchemy?.apeBlendrData?.apeCoinStakeDeposited
+        )
+        ?.toString() || "∞";
+    // TODO:: Fix workaround for division-by-zero error
+    calculatedUserOdds == "1" ? calculatedUserOdds = "∞": calculatedUserOdds = calculatedUserOdds;
     setUserOddsToWin(calculatedUserOdds);
   }, [alchemy]);
 

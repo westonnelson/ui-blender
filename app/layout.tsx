@@ -5,6 +5,7 @@ import Navbar from "@/components/navigation/navbar";
 import Footer from "@/components/navigation/footer";
 import { goerli, mainnet } from "viem/chains";
 import { AlchemyContextWrapper } from "@/context/alchemy.context";
+import { SubgraphContextWrapper } from "@/context/subgraph.context";
 
 const config = createConfig(
   getDefaultConfig({
@@ -40,13 +41,15 @@ export default function RootLayout({
           "--ck-font-family": '"Space Mono", monospace',
         }}>
           <AlchemyContextWrapper>
-          <body>
-            <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-              <Navbar />
-              <div style={{ flexGrow: 1 }}>{children}</div>
-              <Footer />
-            </div>
-          </body>
+            <SubgraphContextWrapper>
+              <body>
+                <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+                  <Navbar />
+                  <div style={{ flexGrow: 1 }}>{children}</div>
+                  <Footer />
+                </div>
+              </body>
+            </SubgraphContextWrapper>
           </AlchemyContextWrapper>
         </ConnectKitProvider>
       </WagmiConfig>
