@@ -24,6 +24,8 @@ import {
 
 import ApeBlendrContract from "../../contracts/ApeBlendr.json";
 import { useSubgraphContext } from "@/context/subgraph.context";
+import Modal from "../Modal/Modal";
+import LoadingModal from "../Modal/LoadingModal/LoadingModal";
 
 export default function ApeBlendr() {
   const [countdown, setCountdown] = useState({
@@ -41,6 +43,7 @@ export default function ApeBlendr() {
     useState("");
   const [walletClientSigner, setWalletClientSginer] = useState({} as any);
   const [userOddsToWin, setUserOddsToWin] = useState("∞");
+  const [showLoadingModal, setShowLoadingModal] = useState(false);
 
   const { alchemy } = useAlchemyContext();
   const { subgraph } = useSubgraphContext();
@@ -122,8 +125,9 @@ export default function ApeBlendr() {
       const handleDepositTxn = await apeBlendrContractInstance.enterApeBlendr(
         ethers.utils.parseEther(valueForDepositOrWithdraw)
       );
-
+      setShowLoadingModal(true);
       await handleDepositTxn.wait();
+      setShowLoadingModal(false);
     } catch (error: any) {}
   };
 
@@ -137,9 +141,14 @@ export default function ApeBlendr() {
       const handleWithdrawTxn = await apeBlendrContractInstance.exitApeBlendr(
         ethers.utils.parseEther(valueForDepositOrWithdraw)
       );
-
+      setShowLoadingModal(true);
       await handleWithdrawTxn.wait();
+      setShowLoadingModal(false);
     } catch (error: any) {}
+  };
+
+  const onLoadingModalClose = async () => {
+    setShowLoadingModal(false);
   };
 
   return (
@@ -292,6 +301,12 @@ export default function ApeBlendr() {
           </div>
         </div>
       </div>
+      <Modal
+          open={showLoadingModal}
+          onClose={() => setShowLoadingModal(false)}
+        >
+          <LoadingModal onClose={() => onLoadingModalClose()} />
+        </Modal>
     </div>
   );
 }
