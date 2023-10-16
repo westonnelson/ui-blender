@@ -40,9 +40,10 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
         ApeBlendrContract?.abi,
         alchemyProvider
       );
-
-      let userApeCoinBalance = BigNumber.from(0);
-      let userStakedBalance = BigNumber.from(0);
+      
+      // Set to 1 initially because of division-by-zero error
+      let userApeCoinBalance = BigNumber.from(1);
+      let userStakedBalance = BigNumber.from(1);
 
       if (address) {
         userApeCoinBalance = await apeCoinContract.balanceOf(address);

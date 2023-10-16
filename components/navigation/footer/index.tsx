@@ -8,8 +8,6 @@ import { AlchemyLogo } from "@/components/svgs/AlchemyLogo";
 export default function Footer() {
   return (
     <div className={styles.footer}>
-      <div><h3>Powered by</h3></div>
-      
       <div>
         <Link href="https://apecoin.com" target={"_blank"}>
           <ApeCoinLogoLarge />
