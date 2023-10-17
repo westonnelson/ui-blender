@@ -1,4 +1,5 @@
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ethers, providers } from "ethers";
+import { WalletClient } from "wagmi";
 
 const month = [
   "Jan",
@@ -85,9 +86,7 @@ export const formatAddress = (addr: string | undefined) =>
 
 export const constructDate = (timestamp: any) => {
   const date = new Date(timestamp * 1000);
-  return ` ${date.getFullYear()} ${
-    month[date.getMonth()]
-  } ${date.getDate()}`;
+  return ` ${date.getFullYear()} ${month[date.getMonth()]} ${date.getDate()}`;
 };
 
 export const constructPayout = (payout: string) => {
@@ -96,4 +95,16 @@ export const constructPayout = (payout: string) => {
   } else {
     return parseFloat(ethers.utils.formatUnits(payout, 18)).toFixed(2);
   }
+};
+
+export const walletClientToSigner = (walletClient: WalletClient) => {
+  const { account, chain, transport } = walletClient;
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  };
+  const provider = new providers.Web3Provider(transport, network);
+  const signer = provider.getSigner(account.address);
+  return signer;
 };

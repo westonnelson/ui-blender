@@ -17,4 +17,5 @@ export type AlchemyType = {
 
 export type AlchemyContextType = {
   alchemy: AlchemyType | undefined;
+  updateUserData: () => void
 };

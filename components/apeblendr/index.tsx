@@ -9,6 +9,7 @@ import {
   formatBigNumber,
   formatUsdPrice,
   setNewTime,
+  walletClientToSigner,
 } from "@/utils/utils";
 import { BigNumber, Contract, ethers, providers } from "ethers";
 import Button from "../Button/Button";
@@ -44,7 +45,7 @@ export default function ApeBlendr() {
   const [apeCoinPrice, setApeCoinPrice] = useState("0");
   const [userAllowance, setUserAllowance] = useState("0");
 
-  const { alchemy } = useAlchemyContext();
+  const { alchemy, updateUserData } = useAlchemyContext();
   const { subgraph } = useSubgraphContext();
   const { coingeckoData } = useCoingeckoContext();
 
@@ -107,18 +108,6 @@ export default function ApeBlendr() {
     };
   }, [alchemy?.apeBlendrData?.epochEndAt]);
 
-  function walletClientToSigner(walletClient: WalletClient) {
-    const { account, chain, transport } = walletClient;
-    const network = {
-      chainId: chain.id,
-      name: chain.name,
-      ensAddress: chain.contracts?.ensRegistry?.address,
-    };
-    const provider = new providers.Web3Provider(transport, network);
-    const signer = provider.getSigner(account.address);
-    return signer;
-  }
-
   const handleChange = (value: string) => {
     setValueForDepositOrWithdraw(value);
   };
@@ -168,6 +157,7 @@ export default function ApeBlendr() {
       );
       setShowLoadingModal(true);
       await handleDepositTxn.wait();
+      onTransactionEnd();
       setShowLoadingModal(false);
     } catch (err: any) {
       setShowErrorModal(true);
@@ -196,6 +186,7 @@ export default function ApeBlendr() {
       );
       setShowLoadingModal(true);
       await handleWithdrawTxn.wait();
+      onTransactionEnd();
       setShowLoadingModal(false);
     } catch (err: any) {
       setShowErrorModal(true);
@@ -206,6 +197,11 @@ export default function ApeBlendr() {
 
   const onLoadingModalClose = async () => {
     setShowLoadingModal(false);
+  };
+
+  const onTransactionEnd = async () => {
+    setValueForDepositOrWithdraw("");
+    updateUserData();
   };
 
   return (
@@ -365,7 +361,6 @@ export default function ApeBlendr() {
       <Modal open={showLoadingModal} onClose={() => setShowLoadingModal(false)}>
         <LoadingModal onClose={() => onLoadingModalClose()} />
       </Modal>
-
       <Modal open={showErrorModal} onClose={() => setShowErrorModal(false)}>
         <ErrorModal
           onClose={() => {
