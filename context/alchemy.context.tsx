@@ -43,10 +43,12 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
       
       let userApeCoinBalance = BigNumber.from(0);
       let userStakedBalance = BigNumber.from(0);
+      let userAllowance = BigNumber.from(0);
 
       if (address) {
         userApeCoinBalance = await apeCoinContract.balanceOf(address);
         userStakedBalance = await apeBlendrContract.balanceOf(address);
+        userAllowance = await apeCoinContract.allowance(address, process.env.APE_BLENDR_CONTRACT);
       }
 
       const hasEpochEnded = await apeBlendrContract.hasEpochEnded();
@@ -62,7 +64,8 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
           apeCoinStakeUnclaimed: apeCoinStake.unclaimed,
           totalPrizeDraws: totalPrizeDraws,
           userStakedBalance: userStakedBalance,
-          userApeCoinBalance: userApeCoinBalance
+          userApeCoinBalance: userApeCoinBalance,
+          userAllowance: userAllowance,
         } as ApeBlendrType
       });
     };

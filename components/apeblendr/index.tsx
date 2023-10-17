@@ -15,6 +15,7 @@ import Button from "../Button/Button";
 import { WalletClient, useAccount, useConnect, useWalletClient } from "wagmi";
 
 import ApeBlendrContract from "../../contracts/ApeBlendr.json";
+import ApeCoinContract from "../../contracts/ApeCoin.json";
 import { useSubgraphContext } from "@/context/subgraph.context";
 import Modal from "../Modal/Modal";
 import LoadingModal from "../Modal/LoadingModal/LoadingModal";
@@ -41,6 +42,7 @@ export default function ApeBlendr() {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorModalMessage, setErrorModalMessage] = useState("");
   const [apeCoinPrice, setApeCoinPrice] = useState("0");
+  const [userAllowance, setUserAllowance] = useState("0");
 
   const { alchemy } = useAlchemyContext();
   const { subgraph } = useSubgraphContext();
@@ -88,6 +90,9 @@ export default function ApeBlendr() {
       ? (calculatedUserOdds = "∞")
       : (calculatedUserOdds = calculatedUserOdds);
     setUserOddsToWin(calculatedUserOdds);
+    const fetchedUserAllowance =
+      alchemy?.apeBlendrData?.userAllowance.toString() || "0";
+    setUserAllowance(fetchedUserAllowance);
   }, [alchemy]);
 
   useEffect(() => {
@@ -134,6 +139,29 @@ export default function ApeBlendr() {
       ApeBlendrContract?.abi,
       walletClientToSigner(walletClientSigner)
     );
+
+    const apeCoinContractInstance = new Contract(
+      process.env.APE_COIN_CONTRACT as any,
+      ApeCoinContract?.abi,
+      walletClientToSigner(walletClientSigner)
+    );
+
+    if (userAllowance == "0") {
+      try {
+        const approveTxn = await apeCoinContractInstance.approve(
+          process.env.APE_BLENDR_CONTRACT,
+          ethers.constants.MaxUint256
+        );
+        setShowLoadingModal(true);
+        await approveTxn.wait();
+        setShowLoadingModal(false);
+      } catch (err: any) {
+        setShowErrorModal(true);
+        let errorText = err?.error?.message ? err.error.message : err.message;
+        setErrorModalMessage(errorText);
+      }
+    }
+
     try {
       const handleDepositTxn = await apeBlendrContractInstance.enterApeBlendr(
         ethers.utils.parseEther(valueForDepositOrWithdraw)
