@@ -21,12 +21,13 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
 }) => {
   const { address, isConnected } = useAccount();
   const [alchemy, setAlchemy] = useState<AlchemyType>();
+  
+  const alchemyProvider = new AlchemyProvider(
+    `${process.env.ALCHEMY_NETWORK}`,
+    `${process.env.ALCHEMY_API_KEY}`
+  );
 
   const initApeBlendrData = async () => {
-    const alchemyProvider = new AlchemyProvider(
-      `${process.env.ALCHEMY_NETWORK}`,
-      `${process.env.ALCHEMY_API_KEY}`
-    );
 
     const apeCoinContract = new Contract(
       process.env.APE_COIN_CONTRACT as any,
