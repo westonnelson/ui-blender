@@ -12,11 +12,7 @@ import {
 } from "@/utils/utils";
 import { BigNumber, Contract, ethers, providers } from "ethers";
 import Button from "../Button/Button";
-import {
-  WalletClient,
-  useAccount,
-  useWalletClient,
-} from "wagmi";
+import { WalletClient, useAccount, useConnect, useWalletClient } from "wagmi";
 
 import ApeBlendrContract from "../../contracts/ApeBlendr.json";
 import { useSubgraphContext } from "@/context/subgraph.context";
@@ -48,6 +44,7 @@ export default function ApeBlendr() {
   const { subgraph } = useSubgraphContext();
 
   const { address, isConnected } = useAccount();
+  const { connectAsync, connectors } = useConnect();
   const { data: walletClient, isError, isLoading } = useWalletClient();
 
   useEffect(() => {
@@ -115,6 +112,14 @@ export default function ApeBlendr() {
   // TODO:: Add approval, refactor to get contract instance from context, clean up code
 
   const handleDeposit = async () => {
+    if (!isConnected) {
+      await connectAsync({
+        chainId: connectors[0].chains[0].id,
+        connector: connectors[0],
+      });
+      return;
+    }
+
     const apeBlendrContractInstance = new Contract(
       process.env.APE_BLENDR_CONTRACT as any,
       ApeBlendrContract?.abi,
@@ -134,6 +139,14 @@ export default function ApeBlendr() {
   };
 
   const handleWithdraw = async () => {
+    if (!isConnected) {
+      await connectAsync({
+        chainId: connectors[0].chains[0].id,
+        connector: connectors[0],
+      });
+      return;
+    }
+
     const apeBlendrContractInstance = new Contract(
       process.env.APE_BLENDR_CONTRACT as any,
       ApeBlendrContract?.abi,
