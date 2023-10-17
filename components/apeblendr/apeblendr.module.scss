@@ -32,6 +32,10 @@
     flex-direction: column;
     justify-content: stretch;
 
+    @include sm {
+      margin-bottom: 20px;
+    }
+
     h3 {
       color: #fff;
     }
@@ -42,6 +46,7 @@
       grid-gap: 24px;
       color: #fff;
       text-align: center;
+      margin-bottom: 4rem;
 
       .stat {
         display: flex;
@@ -83,10 +88,17 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     color: #fff;
 
+    @include sm {
+      margin-bottom: 20px;
+    }
+
     .blendr-deposit-data {
+      margin-bottom: 4rem;
+      .blendr-staked {
+        margin-bottom: 4rem;
+      }
       .deposit-field-wrapper {
         background: #f8f9fc;
         border-radius: 16px;
@@ -204,6 +216,10 @@
     background: var(--app-menu-background);
     border-radius: 16px;
     padding: 32px 24px;
+
+    @include sm {
+      margin-bottom: 20px;
+    }
 
     .blendr-draws-section-header {
       display: flex;

@@ -209,10 +209,10 @@ export default function ApeBlendr() {
       <div className="container">
         <div className={styles["blendr-grid"]}>
           <div className={styles["blendr-stats"]}>
-            <h3>Ape Coin Draw #{totalPrizeDraws}</h3>
+            <h3>Prize Draw #{totalPrizeDraws}</h3>
             <div className={styles["blendr-stats-data"]}>
               <div className={styles.stat}>
-                <h3>Reward</h3>
+                <h3>Prize</h3>
                 <div className={styles.aligned}>
                   <ApeCoinLogo />
                   <p>{formatBigNumber(BigNumber.from(currentAward))}</p>
@@ -241,7 +241,7 @@ export default function ApeBlendr() {
           <div className={styles["blendr-deposit"]}>
             <h3>Ape Coin Balance</h3>
             <div className={styles["blendr-deposit-data"]}>
-              <div>
+              <div className={styles["blendr-staked"]}>
                 <h3>Staked in ApeBlendr</h3>
                 <p
                   onClick={() =>
@@ -318,7 +318,7 @@ export default function ApeBlendr() {
           <div className={styles["blendr-draws-section"]}>
             <div className={styles["blendr-draws-section-header"]}>
               <div className={styles["blendr-draws-title"]}>
-                <h3>Latest Prize Draws</h3>
+                <h3>Prize Draws</h3>
               </div>
             </div>
             <div className={styles["blendr-draws-section-body"]}>
