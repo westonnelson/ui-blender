@@ -141,9 +141,10 @@ export default function ApeBlendr() {
       setShowLoadingModal(true);
       await handleDepositTxn.wait();
       setShowLoadingModal(false);
-    } catch (error: any) {
+    } catch (err: any) {
       setShowErrorModal(true);
-      setErrorModalMessage(error.reason);
+      let errorText = err?.error?.message ? err.error.message : err.message;
+      setErrorModalMessage(errorText);
     }
   };
 
@@ -168,9 +169,10 @@ export default function ApeBlendr() {
       setShowLoadingModal(true);
       await handleWithdrawTxn.wait();
       setShowLoadingModal(false);
-    } catch (error: any) {
+    } catch (err: any) {
       setShowErrorModal(true);
-      setErrorModalMessage(error.reason);
+      let errorText = err?.error?.message ? err.error.message : err.message;
+      setErrorModalMessage(errorText);
     }
   };
 
@@ -245,7 +247,11 @@ export default function ApeBlendr() {
                   </div>
                   <div className={styles["balance"]}>
                     <div>
-                      $ {formatUsdPrice(apeCoinPrice, BigNumber.from(userApeCoinBalance || "0"))}
+                      ${" "}
+                      {formatUsdPrice(
+                        apeCoinPrice,
+                        BigNumber.from(userApeCoinBalance || "0")
+                      )}
                     </div>
                     <div>
                       <span
