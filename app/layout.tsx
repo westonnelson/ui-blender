@@ -6,6 +6,7 @@ import Footer from "@/components/navigation/footer";
 import { goerli, mainnet } from "viem/chains";
 import { AlchemyContextWrapper } from "@/context/alchemy.context";
 import { SubgraphContextWrapper } from "@/context/subgraph.context";
+import { CoingeckoContextWrapper } from "@/context/coingecko.context";
 
 const config = createConfig(
   getDefaultConfig({
@@ -42,6 +43,7 @@ export default function RootLayout({
         }}>
           <AlchemyContextWrapper>
             <SubgraphContextWrapper>
+              <CoingeckoContextWrapper>
               <body>
                 <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
                   <Navbar />
@@ -49,6 +51,7 @@ export default function RootLayout({
                   <Footer />
                 </div>
               </body>
+              </CoingeckoContextWrapper>
             </SubgraphContextWrapper>
           </AlchemyContextWrapper>
         </ConnectKitProvider>

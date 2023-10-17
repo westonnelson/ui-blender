@@ -19,6 +19,7 @@ import { useSubgraphContext } from "@/context/subgraph.context";
 import Modal from "../Modal/Modal";
 import LoadingModal from "../Modal/LoadingModal/LoadingModal";
 import ErrorModal from "../Modal/ErrorModal/ErrorModal";
+import { useCoingeckoContext } from "@/context/coingecko.context";
 
 export default function ApeBlendr() {
   const [countdown, setCountdown] = useState({
@@ -39,9 +40,11 @@ export default function ApeBlendr() {
   const [showLoadingModal, setShowLoadingModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorModalMessage, setErrorModalMessage] = useState("");
+  const [apeCoinPrice, setApeCoinPrice] = useState("0");
 
   const { alchemy } = useAlchemyContext();
   const { subgraph } = useSubgraphContext();
+  const { coingeckoData } = useCoingeckoContext();
 
   const { address, isConnected } = useAccount();
   const { connectAsync, connectors } = useConnect();
@@ -52,6 +55,12 @@ export default function ApeBlendr() {
       setWalletClientSginer(walletClient);
     }
   }, [address, walletClient]);
+
+  useEffect(() => {
+    if (coingeckoData) {
+      setApeCoinPrice(coingeckoData.apeCoinUSDPrice.toString());
+    }
+  }, [coingeckoData?.apeCoinUSDPrice]);
 
   useEffect(() => {
     const fetchedCurrentAward =
@@ -236,7 +245,7 @@ export default function ApeBlendr() {
                   </div>
                   <div className={styles["balance"]}>
                     <div>
-                      $ {formatUsdPrice("0", BigNumber.from("0" || "0"))}
+                      $ {formatUsdPrice(apeCoinPrice, BigNumber.from(userApeCoinBalance || "0"))}
                     </div>
                     <div>
                       <span

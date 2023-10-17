@@ -18,5 +18,6 @@ module.exports = {
     APE_COIN_CONTRACT: process.env.APE_COIN_CONTRACT,
     APE_BLENDR_CONTRACT: process.env.APE_BLENDR_CONTRACT,
     APE_BLENDR_SUBGRAPH: process.env.APE_BLENDR_SUBGRAPH,
+    COINGECKO_API_URL: process.env.COINGECKO_API_URL,
   },
 };
