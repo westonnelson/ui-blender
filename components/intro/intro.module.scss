@@ -1,3 +1,5 @@
+@import "../../assets/sass/variables";
+
 .container {
   display: flex;
   flex-direction: column;
@@ -24,6 +26,12 @@
       letter-spacing: -2px;
 	    margin-bottom: 10px;
       color: #fff;
+      @include sm {
+        margin-bottom: 20px;
+        letter-spacing: 0px;
+        line-height: 64px;
+        padding: 18px;
+      }
 
       span {
         background: rgba(0, 25, 234, 1);
@@ -35,6 +43,9 @@
     h3 {
       color: #c5ccd3;
       font-weight: 500;
+      @include sm {
+        line-height: 24px;
+      }
     }
   }
 
@@ -55,13 +66,17 @@
 
   .buttons_container {
     display: flex;
-    width: 80%;
+    // width: 80%;
     flex-wrap: wrap;
     gap: 4rem;
     justify-content: center;
     color: #000;
     text-align: center;
     margin-bottom: 80px;
+
+    @include sm {
+      gap: 2rem;
+    }
 
     .button {
       display: flex;
@@ -82,6 +97,10 @@
       cursor: pointer;
       transition: all 0.5s;
 
+      @include sm {
+        width: 360px;
+      }
+
       &:hover {
         background: rgba(0, 25, 234, 0.9);
         transform: translateY(-3px);
@@ -89,7 +108,7 @@
 
       p {
         font-weight: 700;
-        font-size: 18px;
+        font-size: 24px;
         line-height: 28px;
         color: #fff;
       }
@@ -127,7 +146,12 @@
     justify-content: center;
     color: #000;
     text-align: center;
-	margin-bottom: 100px;
+	  margin-bottom: 100px;
+
+    @include sm {
+      margin-bottom: 50px;
+      max-width: 360px;
+    }
 
 	.stat {
 		display: flex;
@@ -160,6 +184,9 @@
       font-weight: 500;
       margin-bottom: 20px;
       color: #c5ccd3;
+      @include sm {
+        margin-bottom: 0px;
+      }
     }
 
     span {

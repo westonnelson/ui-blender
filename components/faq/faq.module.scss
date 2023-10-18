@@ -1,3 +1,5 @@
+@import " ../../assets/sass/variables";
+
 .container {
   display: flex;
   flex-direction: column;
@@ -7,6 +9,9 @@
   justify-content: space-between;
   max-width: 672px;
   margin: 0 auto;
+  @include sm {
+    padding: 20px;
+  }
 
   div {
     margin-bottom: 30px;
