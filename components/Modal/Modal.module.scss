@@ -21,7 +21,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--background);
-    border-radius: 16px;
+    border-radius: 4px;
     padding: 32px;
     min-width: 320px;
     min-height: 150px;
@@ -40,7 +40,7 @@
     .close-modal-mobile {
       background: var(--gray);
       opacity: 0.4;
-      border-radius: 20px;
+      border-radius: 4px;
       width: 32px;
       height: 3px;
       display: none;
@@ -101,7 +101,7 @@
       left: 0;
       transform: unset;
       width: 100%;
-      border-radius: 16px 16px 0px 0px;
+      border-radius: 4px 4px 0px 0px;
       padding: 16px;
     }
   }
