@@ -40,6 +40,13 @@ export default function RootLayout({
       <WagmiConfig config={config}>
         <ConnectKitProvider mode="light" customTheme={{
           "--ck-font-family": '"Space Mono", monospace',
+          "--ck-connectbutton-color": "#fff",
+          "--ck-connectbutton-hover-color": "#fff",
+          "--ck-connectbutton-background": "rgb(0, 25, 234)",
+          "--ck-connectbutton-active-color": "#fff",
+          "--ck-connectbutton-active-background": "rgb(0, 25, 234)",
+          "--ck-connectbutton-hover-background": "#0b1db5",
+          "--ck-connectbutton-border-radius": "4px"
         }}>
           <AlchemyContextWrapper>
             <SubgraphContextWrapper>

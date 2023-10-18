@@ -23,16 +23,17 @@
       word-spacing: -20px;
       letter-spacing: -2px;
 	    margin-bottom: 10px;
+      color: #fff;
 
       span {
-        background: #3241eb;
+        background: rgba(0, 25, 234, 1);
         background-clip: text;
         color: transparent;
       }
     }
 
     h3 {
-      color: rgba(1, 1, 1, 0.6);
+      color: #c5ccd3;
       font-weight: 500;
     }
   }
@@ -74,15 +75,15 @@
       width: 392px;
       height: 80px;
 
-      background: rgba(255, 0, 131, 1);
+      background: rgba(0, 25, 234, 1);
       /* Grayscale/Metal */
 
-      border-radius: 12px;
+      border-radius: 4px;
       cursor: pointer;
       transition: all 0.5s;
 
       &:hover {
-        background: rgba(255, 0, 131, 0.9);
+        background: rgba(0, 25, 234, 0.9);
         transform: translateY(-3px);
       }
 
@@ -152,11 +153,13 @@
       font-size: 42px;
       margin-bottom: 0px;
       word-spacing: -10px;
+      color: #ffffff;
     }
 
     h2 {
       font-weight: 500;
       margin-bottom: 20px;
+      color: #c5ccd3;
     }
 
     span {
