@@ -65,7 +65,7 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
         epochEndAt: epochEndAt,
         apeCoinStakeDeposited: apeCoinStake.deposited,
         apeCoinStakeUnclaimed: apeCoinStake.unclaimed,
-        totalPrizeDraws: totalPrizeDraws,
+        totalPrizeDraws: BigNumber.from(totalPrizeDraws).add(1),
         userStakedBalance: userStakedBalance,
         userApeCoinBalance: userApeCoinBalance,
         userAllowance: userAllowance,
