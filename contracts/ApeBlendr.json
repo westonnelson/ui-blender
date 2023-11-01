@@ -2,56 +2,88 @@
   "abi": [
     {
       "inputs": [
-        { "internalType": "address", "name": "_apeCoin", "type": "address" },
         {
-          "internalType": "address",
-          "name": "_apeCoinStaking",
-          "type": "address"
+          "components": [
+            { "internalType": "address", "name": "apeCoin", "type": "address" },
+            {
+              "internalType": "address",
+              "name": "apeCoinStaking",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "apeBlendrFeeReceiver",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "apeBlendrFeeBps",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxApeCoinStake",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "earlyExitFeeBps",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "epochSeconds",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "epochStartedAt",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IApeBlendr.ApeBlendrConfig",
+          "name": "apeBlendrConfig",
+          "type": "tuple"
         },
         {
-          "internalType": "uint256",
-          "name": "_apeBlendrFeeBps",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_epochSeconds",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_epochStartedAt",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint64",
-          "name": "_subscriptionId",
-          "type": "uint64"
-        },
-        { "internalType": "bytes32", "name": "_keyHash", "type": "bytes32" },
-        {
-          "internalType": "uint32",
-          "name": "_callbackGasLimit",
-          "type": "uint32"
-        },
-        {
-          "internalType": "uint16",
-          "name": "_requestConfirmations",
-          "type": "uint16"
-        },
-        { "internalType": "uint32", "name": "_numWords", "type": "uint32" },
-        {
-          "internalType": "address",
-          "name": "_vrfCordinator",
-          "type": "address"
+          "components": [
+            {
+              "internalType": "uint64",
+              "name": "subscriptionId",
+              "type": "uint64"
+            },
+            { "internalType": "bytes32", "name": "keyHash", "type": "bytes32" },
+            {
+              "internalType": "uint32",
+              "name": "callbackGasLimit",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint16",
+              "name": "requestConfirmations",
+              "type": "uint16"
+            },
+            { "internalType": "uint32", "name": "numWords", "type": "uint32" },
+            {
+              "internalType": "address",
+              "name": "vrfCordinator",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct IApeBlendr.ChainlinkVRFConfig",
+          "name": "chainlinkConfig",
+          "type": "tuple"
         }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
     },
+    { "inputs": [], "name": "ApeBlendrFeeTooBig", "type": "error" },
     { "inputs": [], "name": "AwardingInProgress", "type": "error" },
+    { "inputs": [], "name": "AwardingNotInProgress", "type": "error" },
     { "inputs": [], "name": "CurrentEpochHasEnded", "type": "error" },
     { "inputs": [], "name": "CurrentEpochHasNotEnded", "type": "error" },
+    { "inputs": [], "name": "DrawIsFinalized", "type": "error" },
     {
       "inputs": [
         { "internalType": "address", "name": "spender", "type": "address" },
@@ -98,6 +130,8 @@
       "name": "ERC20InvalidSpender",
       "type": "error"
     },
+    { "inputs": [], "name": "MaxApeCoinStakeExceeded", "type": "error" },
+    { "inputs": [], "name": "MaxApeCoinStakeTooLow", "type": "error" },
     {
       "inputs": [
         { "internalType": "address", "name": "have", "type": "address" },
@@ -121,6 +155,8 @@
       "type": "error"
     },
     { "inputs": [], "name": "UnauthorizedTransfer", "type": "error" },
+    { "inputs": [], "name": "VRFRequestStillPending", "type": "error" },
+    { "inputs": [], "name": "ZeroAddress", "type": "error" },
     {
       "anonymous": false,
       "inputs": [
@@ -157,6 +193,45 @@
         }
       ],
       "name": "ApeBlendrExited",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newApeBlendrFeeBps",
+          "type": "uint256"
+        }
+      ],
+      "name": "ApeBlendrFeeBpsUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "newApeBlendrFeeReceiver",
+          "type": "address"
+        }
+      ],
+      "name": "ApeBlendrFeeReceiverUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newMaxApeCoinStake",
+          "type": "uint256"
+        }
+      ],
+      "name": "ApeBlendrMaxApeCoinStakeUpdated",
       "type": "event"
     },
     {
@@ -243,7 +318,14 @@
     },
     {
       "anonymous": false,
-      "inputs": [],
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "currentEpoch",
+          "type": "uint256"
+        }
+      ],
       "name": "NoAwardForCurrentEpoch",
       "type": "event"
     },
@@ -310,6 +392,13 @@
     },
     {
       "inputs": [],
+      "name": "apeBlendrFeeReceiver",
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "apeCoin",
       "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
       "stateMutability": "view",
@@ -332,8 +421,17 @@
           "name": "apeCoinAward",
           "type": "uint256"
         },
-        { "internalType": "bool", "name": "isFinalised", "type": "bool" },
-        { "internalType": "uint256", "name": "blockNumber", "type": "uint256" }
+        { "internalType": "bool", "name": "isFinalized", "type": "bool" },
+        {
+          "internalType": "uint256",
+          "name": "blockNumberRequested",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockNumberSettled",
+          "type": "uint256"
+        }
       ],
       "stateMutability": "view",
       "type": "function"
@@ -350,7 +448,7 @@
     },
     {
       "inputs": [],
-      "name": "awardInProgress",
+      "name": "awardingInProgress",
       "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "view",
       "type": "function"
@@ -368,6 +466,13 @@
       "inputs": [],
       "name": "decimals",
       "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "earlyExitFeeBps",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
@@ -467,9 +572,32 @@
       "type": "function"
     },
     {
+      "inputs": [
+        { "internalType": "uint256", "name": "requestId", "type": "uint256" }
+      ],
+      "name": "handleFailedPrizeDraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "hasEpochEnded",
       "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "name": "lastDepositTimestamp",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxApeCoinStake",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
@@ -562,6 +690,52 @@
         { "internalType": "address", "name": "newOwner", "type": "address" }
       ],
       "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "undistributedPrizeAmount",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newApeBlendrFeeBps",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateApeBlendrFeeBps",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newApeBlendrFeeReceiver",
+          "type": "address"
+        }
+      ],
+      "name": "updateApeBlendrFeeReceiver",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newMaxApeCoinStake",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateMaxApeCoinStake",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

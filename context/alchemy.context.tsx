@@ -58,13 +58,14 @@ export const AlchemyContextWrapper: FC<{ children: ReactNode }> = ({
     const epochEndAt = await apeBlendrContract.epochEndAt();
     const apeCoinStake = await apeBlendrContract.getApeCoinStake();
     const totalPrizeDraws = await apeBlendrContract.totalPrizeDraws();
+    const undistributedPrizeAmount = await apeBlendrContract.undistributedPrizeAmount();
 
     setAlchemy({
       apeBlendrData: {
         hasEpochEnded: hasEpochEnded,
         epochEndAt: epochEndAt,
         apeCoinStakeDeposited: apeCoinStake.deposited,
-        apeCoinStakeUnclaimed: apeCoinStake.unclaimed,
+        apeCoinStakeUnclaimed: BigNumber.from(apeCoinStake.unclaimed).add(undistributedPrizeAmount),
         totalPrizeDraws: BigNumber.from(totalPrizeDraws).add(1),
         userStakedBalance: userStakedBalance,
         userApeCoinBalance: userApeCoinBalance,
