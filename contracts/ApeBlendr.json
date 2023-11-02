@@ -296,6 +296,25 @@
         {
           "indexed": false,
           "internalType": "uint256",
+          "name": "postponedAwardForDraw",
+          "type": "uint256"
+        }
+      ],
+      "name": "AwardingPostponed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "requestId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
           "name": "awardForDraw",
           "type": "uint256"
         }
@@ -566,6 +585,19 @@
     },
     {
       "inputs": [],
+      "name": "getAwardForCurrentDraw",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "awardForCurrentDraw",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "getCurrentTime",
       "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
@@ -692,13 +724,6 @@
       "name": "transferOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "undistributedPrizeAmount",
-      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-      "stateMutability": "view",
       "type": "function"
     },
     {
